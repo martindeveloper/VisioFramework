@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8"/>
+
+    <title>Application Error</title>
+
+    <style type="text/css">
+        body{background:#FFF;color:#FFF;font-family:Verdana, sans-serif;font-size:78%;line-height:1.5;margin:30px auto 2em;padding:0;width:800px}
+        a,a:visited{color:#122538}
+        h1{color:#FFF;font-family:Verdana;font-size:18pt;font-weight:700!important;margin:.6em 0}
+        img:link{border:none}
+        h2{color:#4197E3;font-family:sans-serif;font-size:14pt;font-weight:400;margin:.6em 0;text-decoration:underline}
+        .header{background:#122538;border-bottom:1px solid #eee;padding:1px 2em}
+        .content{padding-left:30px}
+        .table-holder{background-color:#ebebeb;font-family:Consolas, monospace;font-weight:x-small;line-break:strict;padding:5px;width:90%}
+        .footer{border-top:thin #ebebeb solid;color:#000;margin-top:20px;padding-top:10px;width:100%}
+        .footer img{float:right;margin-right:20px}
+    </style>
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <div class="header">
+
+        <h1>Internal application error</h1>
+
+        <p>
+            {$description}
+        </p>
+
+    </div>
+    <div class="content">
+
+        <h2>Error</h2>
+
+        <p style="color:black">While processing your request encountered an internal error! Sorry for the
+            inconvenience.</p>
+
+        <p style="color:black">The error has been logged and will be fixed as soon as we can.</p>
+
+        <h2>Description of error</h2>
+
+        <table style="color:black" class="table-holder">
+            <tr>
+                <td><strong>Type: </strong></td>
+                <td>{$type}</td>
+            </tr>
+
+            <tr>
+                <td><strong>Message: </strong></td>
+                <td>{$message}</td>
+            </tr>
+
+            <tr>
+                <td><strong>Code: </strong></td>
+                <td>{$code}</td>
+            </tr>
+
+            <tr>
+                <td><strong>File/Line: </strong></td>
+                <td>{$file} on {$line} line</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="footer">
+        <ul>
+            <li>Powered by Visio framework <strong>{$vfversion}</strong></li>
+            <li>Script execution time: <strong>{$scriptTime}</strong></li>
+            <li>Referer: <strong>{$referer}</strong></li>
+            <li>Report generated at <strong>{$date}</strong></li>
+        </ul>
+
+    </div>
+
+</div>
+</body>
+</html>

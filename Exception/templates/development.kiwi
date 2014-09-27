@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+
+    <title>Application Error</title>
+
+    <style type="text/css">
+        .backtrace tbody tr:hover,.backtrace tbody tr:hover a{background-color:#222;color:#FFF}
+        .backtrace tbody tr:hover .function-args{background-color:#FFF;color:#000!important}
+        .backtrace,.file-preview,.default-table{background-color:#fafafa;border-collapse:collapse;border-radius:10px;border-spacing:0;color:#404040;font-family:Verdana;font-size:12px;font-weight:400;text-align:left;width:100%}
+        .content{padding-left:30px}
+        div.description{background-color:#222;border-radius:10px;padding-left:10px;padding-top:10px;width:90%}
+        div.description code pre{color:#E0293A;font-family:Consolas, monospace}
+        .file-preview .high{background-color:#222;color:#FFF!important}
+        .file-preview .high span{color:#FFF!important;font-weight:700}
+        .file-preview tr{font-size:12px;line-height:3px;padding:0}
+        .file-preview tr td{padding:0}
+        .footer{border-top:thin #ebebeb solid;color:#000;margin-top:20px;padding-top:10px;width:100%}
+        .footer img{float:right;margin-right:20px}
+        .function-args{background-color:#222;color:#FFF!important;display:none;font-family:Consolas, monospace;padding:0 5px}
+        .header{background:#222;border-bottom:1px solid #eee;padding:1px 2em}
+        .header p{color:#E0293A;font-weight:700}
+        .table-holder{background-color:#ebebeb;border-radius:10px;font-family:Consolas, monospace;font-weight:x-small;line-break:strict;padding:5px;width:90%}
+        a,a:visited{color:#122538}
+        body{background:#FFF;color:#FFF;font-family:Verdana, sans-serif;font-size:78%;line-height:1.5;margin:0 0 2em;padding:0}
+        div,.section{display:block}
+        h1{color:#FFF;font-family:Verdana;font-size:18pt;font-weight:700!important;margin:.6em 0}
+        h2{color:#6D7075;cursor:pointer;font-family:sans-serif;font-size:14pt;font-weight:400;margin:.6em 0;text-decoration:underline}
+        img:link{border:none}
+        p,.content,div.description,p.description{color:#000}
+    </style>
+
+    <script type="text/javascript">
+        function _toggle(a){a=document.getElementById(a);a.style.display="block"==a.style.display?"none":"block"};
+    </script>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>{$title|html}</h1>
+
+    <p>
+        {$description|html}
+    </p>
+
+</div>
+<div class="content">
+    <h2 onclick="javascript:_toggle('content-0');">Description</h2>
+
+    <div style="display:block;" id="content-0">
+        <p class="description">
+            <strong>
+                {$message|html}
+            </strong> (type <strong>{$type}</strong>) with error code <strong>
+            {$code}
+        </strong> on line <strong>
+            {$line}
+        </strong> in file <strong> {$file}
+        </strong>
+        </p>
+    </div>
+    <h2 onclick="javascript:_toggle('content-1');">Stack Trace</h2>
+
+    <div style="display:block;" id="content-1">
+        <div class="table-holder">
+            <table class="backtrace">
+                <thead>
+                <tr>
+                    <th>
+                    </th>
+                    <th>
+                        File
+                    </th>
+                    <th>
+                        Line
+                    </th>
+                    <th>
+                        Function/Method
+                    </th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                {foreach $backtrace}
+                <tr style="cursor: pointer;" onclick="javascript:_toggle('args-{$backtrace->id}')">
+                    <td><strong>#{$backtrace->id}</strong></td>
+
+                    <td>{$backtrace->file}<br/><em class="function-args"
+                                                   id="args-{$backtrace->id}">
+                        <pre><code>{$backtrace->args}</code></pre>
+                    </em></td>
+                    <td>{$backtrace->line}</td>
+                    <td><a target="_blank" href="{$backtrace->url}">{$backtrace->function}</a></td>
+                </tr>
+
+                {/foreach}
+
+                </tbody>
+
+            </table>
+        </div>
+
+        <p><em>Tip 1. - Click on function/method name for detailed info.</em></p>
+
+        <p><em>Tip 2. - Click on path to see arguments.</em></p>
+    </div>
+
+    <h2 onclick="javascript:_toggle('content-2');">File preview</h2>
+
+    <div style="display:block;" id="content-2">
+        <div class="table-holder filepreview">
+            <table class="file-preview">
+
+                {foreach $preview}
+                <tr class="{$preview->class}">
+                    <td>Line {$preview->line}:</td>
+                    <td>
+                        <pre><code>{$preview->source}</code></pre>
+                    </td>
+                </tr>
+                {/foreach}
+
+            </table>
+        </div>
+    </div>
+
+
+    <h2 onclick="javascript:_toggle('content-3');">POST data</h2>
+
+    <div style="display:block;" id="content-3">
+        <div class="table-holder default-table">
+            <table>
+
+                {foreach $postdata}
+                <tr class="{$postdata->name}">
+                    <td><strong>{$postdata->name}:</strong></td>
+                    <td>{$postdata->value}</td>
+                </tr>
+                {/foreach}
+
+            </table>
+        </div>
+    </div>
+
+    <h2 onclick="javascript:_toggle('content-4');">SERVER data</h2>
+
+    <div style="display:block;" id="content-4">
+        <div class="table-holder default-table">
+            <table>
+
+                {foreach $serverdata}
+                <tr class="{$serverdata->name}">
+                    <td><strong>{$serverdata->name}:</strong></td>
+                    <td>{$serverdata->value}</td>
+                </tr>
+                {/foreach}
+
+            </table>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <ul>
+        <li>Powered by Visio framework <strong>{$vfversion}</strong></li>
+        <li>Script execution time: <strong>{$scriptTime}</strong></li>
+        <li>Memory usage: <strong>{$memory} of {$memoryLimit}</strong></li>
+        <li>PHP version: <strong>{$phpversion}</strong></li>
+        <li>Zend version: <strong>{$zendversion}</strong></li>
+        <li>Referer: <strong>{$referer}</strong></li>
+        <li>Report generated at <strong>{$date}</strong></li>
+    </ul>
+
+</div>
+</body>
+</html>

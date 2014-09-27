@@ -1,0 +1,16 @@
+{
+    "name": "visio/visio-framework",
+    "type": "library",
+    "description": "Visio Framework",
+    "homepage": "http://visio.pria.cz",
+    "suggest": {
+        "ext-iconv": "*",
+        "ext-mbstring": "*",
+        "ext-pdo": "*",
+        "ext-memcache": "*",
+        "ext-gd": "*"
+    },
+    "autoload": {
+        "files": ["bootstrap.php"]
+    }
+}
